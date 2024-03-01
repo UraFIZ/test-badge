@@ -3,21 +3,22 @@ name: Update Coverage Badge
 on:
   push:
     branches:
-      - main  # or any other branch you want to trigger this action
+      - main # or any other branch you want to trigger this action
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
-    # Necessary to push the generated badges to the repo
-    - name: Run Tests and Update Badge
-      run: |
-        chmod +x update_coverage_badge.sh
-        ./update_coverage_badge.sh
+      - uses: actions/checkout@v3
+      # Necessary to push the generated badges to the repo
+      - name: Run Tests and Update Badge
+        run: |
+          chmod +x update_coverage_badge.sh
+          ./update_coverage_badge.sh
 
-    - name: Commit and Push if necessary
-      run: |
-        git config --global user.email "kratser88@gmail.com"
-        git config --global user.name "@urafiz"
-        git add badges/coverage-lines.svg
-        git commit -m "Automatically update coverage badge" -a || echo "No changes to commit"
-        git push origin main  # Ensure this matches your branch name
+      - name: Commit and Push if necessary
+        run: |
+          git config --global user.email "kratser88@gmail.com"
+          git config --global user.name "@urafiz"
+          git add badges/coverage-lines.svg
+          git commit -m "Automatically update coverage badge" -a || echo "No changes to commit"
+          git push origin main  # Ensure this matches your branch name

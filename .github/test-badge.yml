@@ -5,14 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # Necessary to push the generated badges to the repo
-    - name: Check out repository code
-      uses: actions/checkout@v3
-    # Necessary to generate the coverage report.
-    # Make sure to add 'json-summary' to the coverageReporters in jest options
-    - name: Tests
-      run: yarn test-ci
-    [...]
-    - name: Generating coverage badges
-      uses: jpb06/jest-badges-action@latest
-        with:
-          branches: main
+    - name: Generate JaCoCo Badge
+#      if: ${{ github.ref == 'refs/heads/master' }}
+      uses: cicirello/jacoco-badge-generator@v2
+      with:
+        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
+        badges-directory: build/reports/jacoco/test/html/badges
+    - name: Publish coverage report to GitHub Pages
+#      if: ${{ github.ref == 'refs/heads/master' }}
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build/reports/jacoco/test/html

@@ -4,13 +4,27 @@ on:
   push:
     branches:
       - main  # or any other branch you want to trigger this action
+
 jobs:
-  bump:
+  update-badge:
     runs-on: ubuntu-latest
+
     steps:
-    # Necessary to push the generated badges to the repo
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0  # Fetch all history for all tags and branches
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '14'  # Specify your Node.js version
+
+    - name: Install Dependencies
+      run: npm install
+
     - name: Run Tests and Update Badge
       run: |
+        npm run test:coverage
         chmod +x update_coverage_badge.sh
         ./update_coverage_badge.sh
 

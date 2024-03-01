@@ -42,6 +42,7 @@
     },
     "setupFilesAfterEnv": [
       "<rootDir>/setupTests.js"
-    ]
+    ],
+    "coverageReporters": ["json-summary"]
   }
 }

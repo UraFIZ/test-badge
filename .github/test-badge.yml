@@ -1,18 +1,23 @@
-name: My ci things
-on: [push]
+name: Update Coverage Badge
+
+on:
+  push:
+    branches:
+      - main  # or any other branch you want to trigger this action
 jobs:
   bump:
     runs-on: ubuntu-latest
     steps:
     # Necessary to push the generated badges to the repo
-    - name: Generate JaCoCo Badge
-#      if: ${{ github.ref == 'refs/heads/master' }}
-      uses: cicirello/jacoco-badge-generator@v2
-      with:
-        jacoco-csv-file: build/reports/jacoco/test/jacocoTestReport.csv
-        badges-directory: build/reports/jacoco/test/html/badges
-    - name: Publish coverage report to GitHub Pages
-#      if: ${{ github.ref == 'refs/heads/master' }}
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: build/reports/jacoco/test/html
+    - name: Run Tests and Update Badge
+      run: |
+        chmod +x update_coverage_badge.sh
+        ./update_coverage_badge.sh
+
+    - name: Commit and Push if necessary
+      run: |
+        git config --global user.email "kratser88@gmail.com"
+        git config --global user.name "@urafiz"
+        git add badges/coverage-lines.svg
+        git commit -m "Automatically update coverage badge" -a || echo "No changes to commit"
+        git push origin main  # Ensure this matches your branch name

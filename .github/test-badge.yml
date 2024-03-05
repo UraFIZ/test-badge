@@ -9,12 +9,13 @@ jobs:
     steps:
       # Necessary to push the generated badges to the repo
       - name: ⬇️ Checkout repo
-        uses: actions/checkout@v4
-
-      # ...
-
+        uses: actions/checkout@v2
+      - name: 🚀 Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
       - name: 📦 Install dependencies
-        run: yarn add jest
+        run: yarn install
 
       - name: 🔍 Tests
         run: yarn test-ci

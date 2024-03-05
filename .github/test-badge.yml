@@ -1,4 +1,4 @@
-name: ⚡ My ci things
+name: My ci things
 
 on: [push]
 
@@ -7,6 +7,5 @@ jobs:
     name: 📣 Generate cool badges
     runs-on: ubuntu-latest
     steps:
-      # Necessary to push the generated badges to the repo
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v2

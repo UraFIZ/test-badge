@@ -1,0 +1,28 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  my-workflow:
+    name: 📣 Generate cool badges
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v4
+
+    - name: 🔍 Tests
+      run: yarn test-ci
+
+    - name: ⚙️ Generating coverage badges
+      uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: main
+          badges-icon: vitest

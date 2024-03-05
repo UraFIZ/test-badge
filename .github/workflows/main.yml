@@ -1,0 +1,26 @@
+name: ⚡ My ci things
+
+on: [push]
+
+jobs:
+  my-workflow:
+    name: 📣 Generate cool badges
+    runs-on: ubuntu-latest
+    steps:
+
+    # Necessary to push the generated badges to the repo
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v4
+
+    # ...
+
+    # Necessary to generate the coverage report.
+    # Make sure to add 'json-summary' to the coverageReporters in jest options
+    - name: 🔍 Tests
+      run: yarn test-ci
+
+    - name: ⚙️ Generating coverage badges
+      uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: main,preprod,staging
+          badges-icon: vitest

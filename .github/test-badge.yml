@@ -1,37 +1,26 @@
-name: Update Coverage Badge
+name: ⚡ My ci things
 
-on:
-  push:
-    branches:
-      - main  # or any other branch you want to trigger this action
+on: [push]
 
 jobs:
-  update-badge:
+  my-workflow:
+    name: 📣 Generate cool badges
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0  # Fetch all history for all tags and branches
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14'  # Specify your Node.js version
+    # Necessary to push the generated badges to the repo
+    - name: ⬇️ Checkout repo
+      uses: actions/checkout@v4
 
-    - name: Install Dependencies
-      run: npm install
+    # ...
 
-    - name: Run Tests and Update Badge
-      run: |
-        npm run test:coverage
-        chmod +x update_coverage_badge.sh
-        ./update_coverage_badge.sh
+    # Necessary to generate the coverage report.
+    # Make sure to add 'json-summary' to the coverageReporters in jest options
+    - name: 🔍 Tests
+      run: yarn test-ci
 
-    - name: Commit and Push if necessary
-      run: |
-        git config --global user.email "kratser88@gmail.com"
-        git config --global user.name "@urafiz"
-        git add badges/coverage-lines.svg
-        git commit -m "Automatically update coverage badge" -a || echo "No changes to commit"
-        git push origin main  # Ensure this matches your branch name
+    - name: ⚙️ Generating coverage badges
+      uses: jpb06/coverage-badges-action@latest
+        with:
+          branches: main,preprod,staging
+          badges-icon: vitest

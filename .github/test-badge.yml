@@ -17,6 +17,9 @@ jobs:
       - name: 📦 Install dependencies
         run: yarn install
 
+      - name: 🚦 Test install
+        run: yarn jest global
+
       - name: 🔍 Tests
         run: yarn test-ci
 

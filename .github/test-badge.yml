@@ -14,7 +14,7 @@ jobs:
       # ...
 
       - name: 📦 Install dependencies
-        run: yarn install
+        run: yarn add jest
 
       - name: 🔍 Tests
         run: yarn test-ci
